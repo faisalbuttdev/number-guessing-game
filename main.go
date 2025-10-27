@@ -41,5 +41,29 @@ func game(chances int) {
 			}
 
 		}
+	} else if chances == 2 {
+		for i := 0; i < 5; i++ {
+			fmt.Println("\nPlease now enter the number to guess")
+			fmt.Scan(&input)
+			if randomNum == input {
+				fmt.Println("\nYou have guessed the correct number!!!!")
+				return
+			} else {
+				fmt.Println("Please guess again!")
+			}
+		}
+
+	} else if chances == 3 {
+		for i := 0; i < 3; i++ {
+			fmt.Println("\nPlease now enter the number to guess")
+			fmt.Scan(&input)
+			if randomNum == input {
+				fmt.Println("\nYou have guessed the correct number!!!!")
+				return
+			} else {
+				fmt.Println("Please guess again!")
+			}
+		}
 	}
+
 }
