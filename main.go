@@ -30,38 +30,38 @@ func game(chances int) {
 	fmt.Println(randomNum)
 	if chances == 1 {
 		fmt.Println("\nYou have chosen Easy Difficulty")
+		fmt.Println("\nPlease now enter the number to guess")
 		for i := 0; i < 10; i++ {
-			fmt.Println("\nPlease now enter the number to guess")
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nYou have guessed the correct number!!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
 				return
 			} else {
-				fmt.Println("Please guess again!")
+				fmt.Println("YOu have guessed incorrect number!!")
 			}
 
 		}
 	} else if chances == 2 {
+		fmt.Println("\nPlease now enter the number to guess")
 		for i := 0; i < 5; i++ {
-			fmt.Println("\nPlease now enter the number to guess")
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nYou have guessed the correct number!!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
 				return
 			} else {
-				fmt.Println("Please guess again!")
+				fmt.Println("YOu have guessed incorrect number!!")
 			}
 		}
 
 	} else if chances == 3 {
+		fmt.Println("\nPlease now enter the number to guess")
 		for i := 0; i < 3; i++ {
-			fmt.Println("\nPlease now enter the number to guess")
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nYou have guessed the correct number!!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
 				return
 			} else {
-				fmt.Println("Please guess again!")
+				fmt.Println("YOu have guessed incorrect number!!")
 			}
 		}
 	}
