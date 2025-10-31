@@ -23,6 +23,7 @@ func choice() {
 }
 
 func game(chances int) {
+	var counter int
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 	var randomNum int = r1.Intn(100)
@@ -31,57 +32,38 @@ func game(chances int) {
 	if chances == 1 {
 		fmt.Println("\nYou have chosen Easy Difficulty")
 		fmt.Println("\nPlease now enter the number to guess")
-		for i := 0; i < 10; i++ {
-			fmt.Scan(&input)
-			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
-				return
-			} else {
-				fmt.Println("YOu have guessed incorrect number!!")
-				if input < randomNum {
-					fmt.Println("The number is greater than the number you have entered!!")
-
-				} else {
-					fmt.Println("You number is smaller than the number you have enetered!!")
-				}
-			}
-
-		}
+		counter = 10
+		validation(chances, randomNum, input, counter)
 	} else if chances == 2 {
+		fmt.Println("\nYou have chosen Medium Difficulty")
 		fmt.Println("\nPlease now enter the number to guess")
-		for i := 0; i < 5; i++ {
-			fmt.Scan(&input)
-			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
-				return
-			} else {
-				fmt.Println("YOu have guessed incorrect number!!")
-				if input < randomNum {
-					fmt.Println("The number is greater than the number you have entered!!")
-
-				} else {
-					fmt.Println("You number is smaller than the number you have enetered!!")
-				}
-			}
-		}
+		counter = 5
+		validation(chances, randomNum, input, counter)
 
 	} else if chances == 3 {
+		fmt.Println("\nYou have chosen Hard Difficulty")
 		fmt.Println("\nPlease now enter the number to guess")
-		for i := 0; i < 3; i++ {
-			fmt.Scan(&input)
-			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
-				return
-			} else {
-				fmt.Println("YOu have guessed incorrect number!!")
-				if input < randomNum {
-					fmt.Println("The number is greater than the number you have entered!!")
+		counter = 3
+		validation(chances, randomNum, input, counter)
 
-				} else {
-					fmt.Println("You number is smaller than the number you have enetered!!")
-				}
+	}
+}
+
+func validation(chances, randomNum, input, counter int) {
+	for i := 0; i < counter; i++ {
+		fmt.Scan(&input)
+		if randomNum == input {
+			fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
+			return
+		} else {
+			fmt.Println("YOu have guessed incorrect number!!")
+			if input < randomNum {
+				fmt.Println("The number is greater than the number you have entered!!")
+
+			} else {
+				fmt.Println("You number is smaller than the number you have enetered!!")
 			}
 		}
-	}
 
+	}
 }
