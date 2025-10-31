@@ -34,10 +34,16 @@ func game(chances int) {
 		for i := 0; i < 10; i++ {
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
 				return
 			} else {
 				fmt.Println("YOu have guessed incorrect number!!")
+				if input < randomNum {
+					fmt.Println("The number is greater than the number you have entered!!")
+
+				} else {
+					fmt.Println("You number is smaller than the number you have enetered!!")
+				}
 			}
 
 		}
@@ -46,10 +52,16 @@ func game(chances int) {
 		for i := 0; i < 5; i++ {
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
 				return
 			} else {
 				fmt.Println("YOu have guessed incorrect number!!")
+				if input < randomNum {
+					fmt.Println("The number is greater than the number you have entered!!")
+
+				} else {
+					fmt.Println("You number is smaller than the number you have enetered!!")
+				}
 			}
 		}
 
@@ -58,10 +70,16 @@ func game(chances int) {
 		for i := 0; i < 3; i++ {
 			fmt.Scan(&input)
 			if randomNum == input {
-				fmt.Println("\nCongratulations you have guessed the correct number in", i, "tries!!!")
+				fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
 				return
 			} else {
 				fmt.Println("YOu have guessed incorrect number!!")
+				if input < randomNum {
+					fmt.Println("The number is greater than the number you have entered!!")
+
+				} else {
+					fmt.Println("You number is smaller than the number you have enetered!!")
+				}
 			}
 		}
 	}
