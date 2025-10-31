@@ -27,29 +27,27 @@ func game(chances int) {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 	var randomNum int = r1.Intn(100)
-	var input int
 	fmt.Println(randomNum)
 	if chances == 1 {
 		fmt.Println("\nYou have chosen Easy Difficulty")
-		fmt.Println("\nPlease now enter the number to guess")
 		counter = 10
-		validation(chances, randomNum, input, counter)
+		gameplay_loop(randomNum, counter)
 	} else if chances == 2 {
 		fmt.Println("\nYou have chosen Medium Difficulty")
-		fmt.Println("\nPlease now enter the number to guess")
 		counter = 5
-		validation(chances, randomNum, input, counter)
+		gameplay_loop(randomNum, counter)
 
 	} else if chances == 3 {
 		fmt.Println("\nYou have chosen Hard Difficulty")
-		fmt.Println("\nPlease now enter the number to guess")
 		counter = 3
-		validation(chances, randomNum, input, counter)
+		gameplay_loop(randomNum, counter)
 
 	}
 }
 
-func validation(chances, randomNum, input, counter int) {
+func gameplay_loop(randomNum, counter int) {
+	fmt.Println("\nPlease now enter the number to guess")
+	var input int
 	for i := 0; i < counter; i++ {
 		fmt.Scan(&input)
 		if randomNum == input {
@@ -66,4 +64,5 @@ func validation(chances, randomNum, input, counter int) {
 		}
 
 	}
+	fmt.Println("\nGAME OVER!\nTHE CORRECT ANSWER WAS:", randomNum)
 }
