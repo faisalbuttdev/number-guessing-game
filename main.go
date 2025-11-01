@@ -85,8 +85,10 @@ func game(chances, randomNum int) { //Control Structure for Choices
 func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 	fmt.Println("\nPlease now enter the number to guess")
 	var input int
+	start := time.Now()
 	for i := 0; i < counter; i++ {
 		_, err := fmt.Scan(&input)
+
 		if err != nil {
 			fmt.Println("Please Enter a Integer")
 			continue
@@ -112,7 +114,9 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 		}
 
 	}
+	elasped := time.Since(start)
 	fmt.Println("\nGAME OVER!\nTHE CORRECT ANSWER WAS:", randomNum)
+	fmt.Println("Total Time it took you:", elasped)
 }
 
 func playagain() bool {
