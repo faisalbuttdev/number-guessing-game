@@ -9,14 +9,42 @@ import (
 	"time"
 )
 
+const (
+	easylevel   = 1
+	mediumlevel = 2
+	hardlevel   = 3
+	minNum      = 1
+	maxNum      = 100
+)
+
+type difficulty struct {
+	Name    string
+	Chances int
+}
+
+var selectedDifficulty = map[int]difficulty{
+	easylevel:   {"Easy", 10},
+	mediumlevel: {"Medium", 5},
+	hardlevel:   {"Hard", 3},
+}
+
 func main() {
 	rules()
+	randomNum := randGen()
 	chances := choice()
-	game(chances)
+	game(chances, randomNum)
 }
 
 func rules() {
 	fmt.Println("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.\nYou have 5 chances to guess the correct number.\nPlease select the difficulty level\n1. Easy (10 chances)\n2. Medium (5 chances)\n3. Hard (3 chances)")
+}
+
+func randGen() int {
+	s1 := rand.NewSource(time.Now().UnixNano())
+	r1 := rand.New(s1)
+	var randomNum int = r1.Intn(maxNum) + minNum
+	fmt.Println(randomNum)
+	return randomNum
 }
 
 func choice() int {
@@ -37,31 +65,15 @@ func choice() int {
 	}
 }
 
-func game(chances int) { //Control Structure for Choices
-	var counter int
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
-	var randomNum int = r1.Intn(100) + 1
-	fmt.Println(randomNum)
+func game(chances, randomNum int) { //Control Structure for Choices
 
-	difficultyMap := map[int]int{
-		1: 10,
-		2: 5,
-		3: 3,
-	}
-	difficultyName := map[int]string{
-		1: "Easy",
-		2: "Medium",
-		3: "Hard",
-	}
-
-	counter, exists := difficultyMap[chances]
+	diff, exists := selectedDifficulty[chances]
 	if !exists {
 		fmt.Println("Invalid Difficulty Selected")
 		return
 	}
-	fmt.Println("So you have chosen the difficulty level ", difficultyName[chances])
-	gameplay_loop(randomNum, counter)
+	fmt.Println("So you have chosen the difficulty level ", diff.Name)
+	gameplay_loop(randomNum, diff.Chances)
 }
 
 func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
@@ -84,9 +96,12 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 			fmt.Println("You have guessed incorrect number!!")
 			if input < randomNum {
 				fmt.Println("The number is greater than the number you have entered!!")
+				fmt.Println("You have ", counter-i-1, " tries left")
 
 			} else {
 				fmt.Println("You number is smaller than the number you have enetered!!")
+				fmt.Println("You have ", counter-i-1, " tries left")
+
 			}
 		}
 
