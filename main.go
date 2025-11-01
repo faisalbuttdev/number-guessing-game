@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sort"
 	"time"
 )
 
@@ -16,6 +17,8 @@ const (
 	minNum      = 1
 	maxNum      = 100
 )
+
+var Highscore []int
 
 type difficulty struct {
 	Name    string
@@ -87,7 +90,6 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 	start := time.Now()
 	ticker := time.NewTicker(1 * time.Second)
 	done := make(chan bool)
-
 	go func() {
 		for {
 			select {
@@ -97,10 +99,10 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 				return
 			}
 		}
-
 	}()
-
+	fmt.Println(randomNum)
 	for i := 0; i < counter; i++ {
+
 		_, err := fmt.Scan(&input)
 		if err != nil {
 			fmt.Println("Please Enter a Integer")
@@ -112,6 +114,9 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 		}
 		if randomNum == input {
 			fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
+			Highscore = append(Highscore, i+1)
+			sort.Ints(Highscore)
+			printHigh(Highscore)
 			return
 		} else {
 			fmt.Println("\nYou have guessed incorrect number!!")
@@ -149,5 +154,13 @@ func playagain() bool {
 			fmt.Println("Alright! See you again!!")
 			return false
 		}
+	}
+}
+
+func printHigh(Highscore []int) {
+	fmt.Println("==================High Scores====================")
+	for _, value := range Highscore {
+		fmt.Println(value)
+
 	}
 }
