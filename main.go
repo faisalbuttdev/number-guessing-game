@@ -29,19 +29,25 @@ var selectedDifficulty = map[int]difficulty{
 }
 
 func main() {
-	rules()
-	randomNum := randGen()
-	chances := choice()
-	game(chances, randomNum)
+	for {
+
+		s1 := rand.NewSource(time.Now().UnixNano())
+		r1 := rand.New(s1)
+		randomNum := randGen(r1)
+		rules()
+		chances := choice()
+		game(chances, randomNum)
+		if !playagain() {
+			break
+		}
+	}
 }
 
 func rules() {
 	fmt.Println("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.\nYou have 5 chances to guess the correct number.\nPlease select the difficulty level\n1. Easy (10 chances)\n2. Medium (5 chances)\n3. Hard (3 chances)")
 }
 
-func randGen() int {
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
+func randGen(r1 *rand.Rand) int {
 	var randomNum int = r1.Intn(maxNum) + minNum
 	fmt.Println(randomNum)
 	return randomNum
@@ -107,4 +113,22 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 
 	}
 	fmt.Println("\nGAME OVER!\nTHE CORRECT ANSWER WAS:", randomNum)
+}
+
+func playagain() bool {
+	for {
+		fmt.Println("Do you want to play again (y/n)")
+		var again string
+		_, err := fmt.Scan(&again)
+		if err != nil {
+			fmt.Println("Please Enter Y or N")
+			continue
+		}
+		if again == "y" || again == "Y" {
+			return true
+		} else {
+			fmt.Println("Alright! See you again!!")
+			return false
+		}
+	}
 }
