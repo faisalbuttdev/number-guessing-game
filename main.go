@@ -1,5 +1,4 @@
 //Number Guessing Game
-//I have tried to make this as functional as possbile
 
 package main
 
@@ -25,7 +24,7 @@ type difficulty struct {
 	Chances int
 }
 
-var selectedDifficulty = map[int]difficulty{
+var selectedDifficulty = map[int]difficulty{ //Struct map for difficulty and number of  chances
 	easylevel:   {"Easy", 10},
 	mediumlevel: {"Medium", 5},
 	hardlevel:   {"Hard", 3},
@@ -39,7 +38,7 @@ func main() {
 		randomNum := randGen(r1)
 		rules()
 		chances := choice()
-		game(chances, randomNum)
+		difficultySelection(chances, randomNum)
 		if !playagain() {
 			break
 		}
@@ -73,7 +72,7 @@ func choice() int {
 	}
 }
 
-func game(chances, randomNum int) { //Control Structure for Choices
+func difficultySelection(chances, randomNum int) { //Control Structure for Choices
 
 	diff, exists := selectedDifficulty[chances]
 	if !exists {
@@ -88,19 +87,18 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 	fmt.Println("\nPlease now enter the number to guess")
 	var input int
 	start := time.Now()
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(1 * time.Second) //Ticker that ticks after every 1 second
 	done := make(chan bool)
-	go func() {
+	go func() { //A goroutine for live timer
 		for {
 			select {
 			case <-ticker.C:
-				fmt.Printf("\rTimer: %v", time.Since(start))
-			case <-done:
+				fmt.Printf("\rTimer: %v", time.Since(start)) //This prints the timer every 1 second
+			case <-done: //Runs when gameplay ends or restarts
 				return
 			}
 		}
 	}()
-	fmt.Println(randomNum)
 	for i := 0; i < counter; i++ {
 
 		_, err := fmt.Scan(&input)
@@ -133,7 +131,7 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 
 	}
 	done <- true
-	ticker.Stop()
+	ticker.Stop() //Stops the Live Timer
 	elasped := time.Since(start)
 	fmt.Println("\nGAME OVER!\nTHE CORRECT ANSWER WAS:", randomNum)
 	fmt.Println("Total Time it took you:", elasped)
