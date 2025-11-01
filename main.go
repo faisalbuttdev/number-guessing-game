@@ -49,7 +49,6 @@ func rules() {
 
 func randGen(r1 *rand.Rand) int {
 	var randomNum int = r1.Intn(maxNum) + minNum
-	fmt.Println(randomNum)
 	return randomNum
 }
 
@@ -86,9 +85,23 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 	fmt.Println("\nPlease now enter the number to guess")
 	var input int
 	start := time.Now()
+	ticker := time.NewTicker(1 * time.Second)
+	done := make(chan bool)
+
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				fmt.Printf("\rTimer: %v", time.Since(start))
+			case <-done:
+				return
+			}
+		}
+
+	}()
+
 	for i := 0; i < counter; i++ {
 		_, err := fmt.Scan(&input)
-
 		if err != nil {
 			fmt.Println("Please Enter a Integer")
 			continue
@@ -101,19 +114,21 @@ func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
 			fmt.Println("\nCongratulations you have guessed the correct number in", i+1, "tries!!!")
 			return
 		} else {
-			fmt.Println("You have guessed incorrect number!!")
+			fmt.Println("\nYou have guessed incorrect number!!")
 			if input < randomNum {
 				fmt.Println("The number is greater than the number you have entered!!")
 				fmt.Println("You have ", counter-i-1, " tries left")
 
 			} else {
-				fmt.Println("You number is smaller than the number you have enetered!!")
+				fmt.Println("Your number is smaller than the number you have enetered!!")
 				fmt.Println("You have ", counter-i-1, " tries left")
 
 			}
 		}
 
 	}
+	done <- true
+	ticker.Stop()
 	elasped := time.Since(start)
 	fmt.Println("\nGAME OVER!\nTHE CORRECT ANSWER WAS:", randomNum)
 	fmt.Println("Total Time it took you:", elasped)
