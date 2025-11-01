@@ -43,21 +43,25 @@ func game(chances int) { //Control Structure for Choices
 	r1 := rand.New(s1)
 	var randomNum int = r1.Intn(100) + 1
 	fmt.Println(randomNum)
-	if chances == 1 {
-		fmt.Println("\nYou have chosen Easy Difficulty")
-		counter = 10
-		gameplay_loop(randomNum, counter)
-	} else if chances == 2 {
-		fmt.Println("\nYou have chosen Medium Difficulty")
-		counter = 5
-		gameplay_loop(randomNum, counter)
 
-	} else if chances == 3 {
-		fmt.Println("\nYou have chosen Hard Difficulty")
-		counter = 3
-		gameplay_loop(randomNum, counter)
-
+	difficultyMap := map[int]int{
+		1: 10,
+		2: 5,
+		3: 3,
 	}
+	difficultyName := map[int]string{
+		1: "Easy",
+		2: "Medium",
+		3: "Hard",
+	}
+
+	counter, exists := difficultyMap[chances]
+	if !exists {
+		fmt.Println("Invalid Difficulty Selected")
+		return
+	}
+	fmt.Println("So you have chosen the difficulty level ", difficultyName[chances])
+	gameplay_loop(randomNum, counter)
 }
 
 func gameplay_loop(randomNum, counter int) { //Handles Main Game Logic
